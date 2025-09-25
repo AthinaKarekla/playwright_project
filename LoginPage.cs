@@ -1,45 +1,44 @@
 ﻿using Microsoft.Playwright;
-using System.Threading.Tasks;
 using SauceDemoTestSuite.Models;
-using NUnit.Framework;
-
+using TechTalk.SpecFlow; 
 namespace SauceDemoTestSuite
 {
     public class LoginPage
     {
-        private IPage _page = null!;
+        private readonly IPage _page;
+        private readonly ScenarioContext _scenarioContext; 
 
-        private ILocator UsernameInput => _page.Locator("[data-test='username']");
-        private ILocator PasswordInput => _page.Locator("[data-test='password']");
-        private ILocator LoginButton => _page.Locator("[data-test='login-button']");
-        private ILocator ErrorMessage => _page.Locator("[data-test='error']");
+        private readonly ILocator _usernameInput;
+        private readonly ILocator _passwordInput;
+        private readonly ILocator _loginButton;
+        private readonly ILocator _errorMessage;
 
-        public async Task InitializeAsync()
+        public LoginPage(IPage page, ScenarioContext scenarioContext) 
         {
-            var playwright = await Playwright.CreateAsync();
-            var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
-            {
-                Headless = false
-            });
+            _page = page;
+            _scenarioContext = scenarioContext;
 
-            var context = await browser.NewContextAsync();
-            _page = await context.NewPageAsync();
+            _usernameInput = _page.Locator("[data-test='username']");
+            _passwordInput = _page.Locator("[data-test='password']");
+            _loginButton = _page.Locator("[data-test='login-button']");
+            _errorMessage = _page.Locator("[data-test='error']");
+        }
+
+        public async Task NavigateAsync()
+        {
             await _page.GotoAsync("https://www.saucedemo.com/");
         }
 
         public async Task LoginAsync(User user)
         {
-            await UsernameInput.FillAsync(user.Username);
-            await PasswordInput.FillAsync(user.Password);
-            await LoginButton.ClickAsync();
+            await _usernameInput.FillAsync(user.Username);
+            await _passwordInput.FillAsync(user.Password);
+            await _loginButton.ClickAsync();
         }
 
         public async Task AssertLoginErrorDisplayedAsync()
         {
-            bool isVisible = await ErrorMessage.IsVisibleAsync();
-            Assert.IsTrue(isVisible, "Expected error message to be visible after failed login.");
+            await Assertions.Expect(_errorMessage).ToBeVisibleAsync();
         }
-
-        public IPage GetPage() => _page;
     }
 }
