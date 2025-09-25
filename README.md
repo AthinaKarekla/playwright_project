@@ -15,8 +15,7 @@ Using **Playwright with C# and SpecFlow (BDD)**.
 The project includes multiple automated scenarios written in **BDD (Gherkin)** format, such as:  
 - Valid and invalid login flows  
 - Product sorting by price and other criteria  
-- Navigation and page validation  
-- Error handling and validation messages  
+- Navigation and page validation   
 - General user interaction with the platform  
 
 These scenarios ensure both positive and negative paths are covered and can be easily extended for future test cases.
