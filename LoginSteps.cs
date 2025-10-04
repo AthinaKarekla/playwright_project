@@ -10,18 +10,24 @@ namespace SauceDemoTestSuite.StepDefinitions
 
         public LoginSteps(LoginPage loginPage)
         {
-            _loginPage = loginPage; 
-
+            _loginPage = loginPage;
+        }
         [Given("the user navigates to the saucedemo site")]
         public async Task GivenNavigatesToSauceDemo()
         {
-            await _loginPage.NavigateAsync();  
+            await _loginPage.NavigateAsync();
         }
 
         [When("a valid user logs in")]
         public async Task WhenUserLogsIn()
         {
             await _loginPage.LoginAsync(UserFactory.ValidUser);
+        }
+
+        [Then("the user should see the products page")]
+        public async Task ThenUserShouldSeeProductsPage()
+        {
+            await _loginPage.AssertLoginSuccessAsync();
         }
 
         [When("an invalid user logs in")]
@@ -37,3 +43,5 @@ namespace SauceDemoTestSuite.StepDefinitions
         }
     }
 }
+    
+

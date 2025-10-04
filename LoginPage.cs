@@ -1,6 +1,7 @@
 ﻿using Microsoft.Playwright;
 using SauceDemoTestSuite.Models;
-using TechTalk.SpecFlow; 
+using TechTalk.SpecFlow;
+
 namespace SauceDemoTestSuite
 {
     public class LoginPage
@@ -12,6 +13,7 @@ namespace SauceDemoTestSuite
         private readonly ILocator _passwordInput;
         private readonly ILocator _loginButton;
         private readonly ILocator _errorMessage;
+        private readonly ILocator _success;
 
         public LoginPage(IPage page, ScenarioContext scenarioContext) 
         {
@@ -22,6 +24,7 @@ namespace SauceDemoTestSuite
             _passwordInput = _page.Locator("[data-test='password']");
             _loginButton = _page.Locator("[data-test='login-button']");
             _errorMessage = _page.Locator("[data-test='error']");
+            _success= _page.Locator("[data-test='inventory-container']");
         }
 
         public async Task NavigateAsync()
@@ -35,7 +38,10 @@ namespace SauceDemoTestSuite
             await _passwordInput.FillAsync(user.Password);
             await _loginButton.ClickAsync();
         }
-
+        public async Task AssertLoginSuccessAsync()
+        {
+            await Assertions.Expect(_success).ToBeVisibleAsync();
+        }
         public async Task AssertLoginErrorDisplayedAsync()
         {
             await Assertions.Expect(_errorMessage).ToBeVisibleAsync();
