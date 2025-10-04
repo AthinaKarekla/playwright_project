@@ -28,13 +28,11 @@ namespace SauceDemoTestSuite.Hooks
             var context = await browser.NewContextAsync();
             var page = await context.NewPageAsync();
 
-            // Κάνε register στο BoDi για DI στους constructors
             _container.RegisterInstanceAs(pw);
             _container.RegisterInstanceAs(browser);
             _container.RegisterInstanceAs(context);
             _container.RegisterInstanceAs(page);
 
-            // Αν θες να injectαρεις απευθείας LoginPage στα Steps:
             _container.RegisterInstanceAs(new LoginPage(page, _sc));
         }
 
