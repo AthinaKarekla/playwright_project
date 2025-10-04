@@ -10,13 +10,12 @@ namespace SauceDemoTestSuite.StepDefinitions
 
         public LoginSteps(LoginPage loginPage)
         {
-            _loginPage = loginPage; // Το παρέχει το BoDi, επειδή το κάναμε RegisterInstanceAs στο Hook
-        }
+            _loginPage = loginPage; 
 
         [Given("the user navigates to the saucedemo site")]
         public async Task GivenNavigatesToSauceDemo()
         {
-            await _loginPage.NavigateAsync();  // ΟΧΙ InitializeAsync()
+            await _loginPage.NavigateAsync();  
         }
 
         [When("a valid user logs in")]
