@@ -26,7 +26,7 @@ namespace SauceDemoTestSuite.StepDefinitions
         [When("the user sorts products by price from high to low")]
         public async Task WhenUserSortsProductsDescending()
         {
-            await _productsPage.SortByPriceLowToHighAsync();
+            await _productsPage.SortByPriceHighToLowAsync();
         }
 
         [Then("the products should be sorted in descending order")]

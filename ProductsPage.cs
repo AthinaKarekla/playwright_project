@@ -24,17 +24,24 @@ namespace SauceDemoTestSuite
             await Assertions.Expect(ActiveOption).ToHaveTextAsync("Price (low to high)");
 
         }
+        public async Task SortByPriceHighToLowAsync()
+        {
+            await SortDropdown.ClickAsync();
+            await SortDropdown.SelectOptionAsync(new SelectOptionValue { Value = "hilo" });
+            await Assertions.Expect(ActiveOption).ToHaveTextAsync("Price (high to low)");
+
+        }
 
         public async Task AssertProductsSortedAscendingAsync()
         {
-            var prices = InventoryItemPrice.AllInnerTextsAsync();
-            Console.WriteLine("here" + prices);
+            var prices = await InventoryItemPrice.AllInnerTextsAsync();
+            Console.WriteLine("here: " + string.Join(", ", prices));
         }
 
         public async Task AssertProductsSortedDescendingAsync()
         {
-            var prices = InventoryItemPrice.Nth(0).AllInnerTextsAsync();
-            Console.WriteLine("here" + prices);
+            var prices =await InventoryItemPrice.AllInnerTextsAsync();
+            Console.WriteLine("here: " + string.Join(", ", prices));
         }
     }
 }
